@@ -13,8 +13,11 @@ const footerLinks = [
   { href: "/#contact", label: "Contact" },
 ];
 
-export const Footer = () => {
+export const Footer = ({ hideContactLink = false }) => {
   const currentYear = new Date().getFullYear();
+  const visibleFooterLinks = hideContactLink
+    ? footerLinks.filter((link) => link.href !== "/#contact")
+    : footerLinks;
 
   return (
     <footer className="py-12 border-t border-border">
@@ -32,7 +35,7 @@ export const Footer = () => {
 
           {/* Links */}
           <nav className="flex flex-wrap justify-center gap-6">
-            {footerLinks.map((link) => (
+            {visibleFooterLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}

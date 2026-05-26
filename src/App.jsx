@@ -3,10 +3,10 @@ import { Hero } from "@/sections/Hero";
 import { About } from "@/sections/About";
 import { Projects } from "@/sections/Projects";
 import { Experience } from "@/sections/Experience";
-import { Testimonials } from "@/sections/Testimonials";
 import { Contact } from "@/sections/Contact";
 import { ProjectsPage } from "@/pages/ProjectsPage";
 import { Footer } from "./layout/Footer";
+import { BackToTopButton } from "@/components/BackToTopButton";
 
 function App() {
   const isProjectsPage = window.location.pathname.startsWith("/projects");
@@ -22,11 +22,11 @@ function App() {
           <About />
           <Projects />
           <Experience />
-          <Testimonials />
           <Contact />
         </main>
       )}
-      <Footer />
+      {!isProjectsPage ? <BackToTopButton /> : null}
+      <Footer hideContactLink={!isProjectsPage} />
     </div >
   )
 }

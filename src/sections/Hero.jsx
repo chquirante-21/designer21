@@ -14,17 +14,14 @@ const skills = [
   "Adobe Illustrator",
   "Adobe After Effects",
   "Adobe Premiere Pro",
-  "Final Cut Pro (In Progress)",
-  "Figma",
+  "Figma App",
   "HTML",
-  "HTML5",
   "CSS",
-  "CSS3",
   "JavaScript",
   "Tailwind CSS (In Progress)",
-  "React (In Progress)",
-  "Three.js (In Progress)",
-  "Next.js (In Progress)",
+  "React JS (In Progress)",
+  "Three JS (In Progress)",
+  "Next JS (In Progress)",
 ];
 
 const heroDots = Array.from({ length: 30 }, (_, index) => ({
@@ -107,14 +104,27 @@ export const Hero = () => {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
+            <div className="flex flex-wrap justify-center gap-4 animate-fade-in animation-delay-300 md:justify-start">
               <Button as="a" href="#contact" size="lg">
                 Contact Me <ArrowRight className="w-5 h-5" />
               </Button>
-              <AnimatedBorderButton>
-                <Download className="w-5 h-5" />
-                Download CV
-              </AnimatedBorderButton> 
+              <div className="group/cv relative">
+                <div
+                  id="cv-notice"
+                  role="tooltip"
+                  className="pointer-events-none absolute bottom-[calc(100%+0.85rem)] left-1/2 z-20 -translate-x-1/2 translate-y-2 whitespace-nowrap rounded-xl border border-primary/25 bg-card px-4 py-2.5 text-sm font-medium text-foreground opacity-0 shadow-xl shadow-black/35 backdrop-blur transition-all duration-200 group-hover/cv:translate-y-0 group-hover/cv:opacity-100 group-focus-within/cv:translate-y-0 group-focus-within/cv:opacity-100"
+                >
+                  Sorry! Not yet Implemented.
+                  <span className="absolute left-1/2 top-full h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-primary/25 bg-card" />
+                </div>
+                <AnimatedBorderButton
+                  type="button"
+                  aria-describedby="cv-notice"
+                >
+                  <Download className="w-5 h-5" />
+                  Download CV
+                </AnimatedBorderButton>
+              </div>
             </div>
 
             {/* Social Links */}

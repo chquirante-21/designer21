@@ -11,9 +11,9 @@ export const projects = [
     description:
       "A comprehensive financial analytics platform with real-time data visualization, portfolio management, and AI-powered insights.",
     role: "UI design, frontend build, dashboard interaction design",
-    tags: ["React", "TypeScript", "NodeJS"],
-    link: "#",
-    github: "#",
+    tags: ["Figma", "Adobe Photoshop", "Adobe Illustrator", "React JS", "Tailwindcss"],
+    //link: "/projects#fintech-dashboard",
+    //github: "#",
   },
   {
     id: "ecommerce-platform",
@@ -26,24 +26,24 @@ export const projects = [
     description:
       "A full-featured e-commerce solution with inventory management, payment processing, and analytics dashboard.",
     role: "Product layout, visual system, responsive storefront UI",
-    tags: ["Next.js", "Stripe", "PostgreSQL", "Tailwind"],
-    link: "#",
-    github: "#",
+    tags: ["Figma", "Adobe Photoshop", "HTML", "Tailwindcss", "JavaScript"],
+    //link: "#",
+    //github: "#",
   },
   {
     id: "ai-writing-assistant",
-    title: "AI Writing Assistant",
+    title: "Design System",
     category: "AI Product",
     year: "2025",
     duration: "6 weeks",
     rating: "Prototype",
     image: "/projects/project3.png",
     description:
-      "An intelligent writing tool powered by GPT-4, helping users create better content faster.",
+      "The system is designed with a clear 8px grid and WCAG-compliant contrast to ensure it's ready for high-fidelity product development.",
     role: "Interface design, prompt workflow, frontend experience",
-    tags: ["React", "OpenAI", "Python", "FastAPI"],
-    link: "#",
-    github: "#",
+    tags: ["Figma UI Components", "Figma Variables", "Reusable Design Tokens", "Cohesive Digital Products"],
+    //link: "#",
+    //github: "#",
   },
   {
     id: "project-management-tool",
@@ -56,9 +56,9 @@ export const projects = [
     description:
       "A collaborative workspace for teams with real-time updates, task tracking, and integrations.",
     role: "Design system, task views, interaction polish",
-    tags: ["Next.js", "Socket.io", "MongoDB", "Redis"],
-    link: "#",
-    github: "#",
+    tags: ["Figma UX/UI", "Developer Experience", "Frontend", "Tailwind CSS", "React"],
+    //link: "#",
+    //github: "#",
   },
   {
     id: "creative-brand-system",
@@ -72,8 +72,8 @@ export const projects = [
       "A flexible visual identity package for digital campaigns, social assets, and landing page design.",
     role: "Brand direction, graphic design, web creative assets",
     tags: ["Figma", "Photoshop", "Illustrator"],
-    link: "#",
-    github: "#",
+    //link: "#",
+    //github: "#",
   },
   {
     id: "motion-launch-kit",
@@ -87,8 +87,8 @@ export const projects = [
       "A launch-ready motion package with animated banners, social teasers, and conversion-focused landing visuals.",
     role: "After Effects animation, creative direction, export pipeline",
     tags: ["After Effects", "Premiere Pro", "Figma"],
-    link: "#",
-    github: "#",
+    //link: "#",
+    //github: "#",
   },
   {
     id: "portfolio-redesign",
@@ -102,8 +102,8 @@ export const projects = [
       "A polished portfolio experience focused on clear storytelling, fast scanning, and high-impact project presentation.",
     role: "Frontend development, responsive layout, visual polish",
     tags: ["React", "Tailwind CSS", "Vite"],
-    link: "#",
-    github: "#",
+    //link: "#",
+    //github: "#",
   },
   {
     id: "studio-booking-ui",
@@ -117,8 +117,8 @@ export const projects = [
       "A booking interface designed for quick schedule comparison, simple checkout, and clean mobile usability.",
     role: "UX design, UI components, mobile-first prototype",
     tags: ["Figma", "React", "CSS"],
-    link: "#",
-    github: "#",
+    //link: "#",
+    //github: "#",
   },
 ];
 
