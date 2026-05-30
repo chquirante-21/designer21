@@ -4,7 +4,7 @@ const experiences = [
     role: "Senior Web and Graphic Designer",
     company: "Tri7 Solutions Inc. LTD",
     description:
-      "Leading frontend architecture for a suite of fintech products. Implemented micro-frontend architecture, reduced bundle size by 40%, and mentored a team of 5 developers.",
+      "Experienced Senior Web and Graphic Designer specializing in responsive web design, UI/UX, branding, and digital marketing creatives, creating visually compelling and user-focused experiences that drive engagement and strengthen brand presence.",
     technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro"],
     current: true,
   },
@@ -13,7 +13,7 @@ const experiences = [
     role: "Web Designer",
     company: "Walo Group Information Technologies Inc.",
     description:
-      "Built and maintained multiple React applications for enterprise clients. Introduced automated testing practices that improved code coverage to 85%.",
+      "Experienced Web Designer specializing in responsive, user-centered websites, creating modern and visually engaging digital experiences that enhance usability, performance, and brand impact across all devices.",
     technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro", "HTML", "CSS",],
     current: false,
   },
@@ -22,7 +22,7 @@ const experiences = [
     role: "Web and Graphic Designer",
     company: "E-Fox Solutions Inc.",
     description:
-      "Contributed to the development of a SaaS platform from MVP to production. Collaborated with designers to implement pixel-perfect UI components.",
+      "Creative Web and Graphic Designer specializing in responsive websites, branding, and digital marketing creatives, delivering visually compelling and user-focused designs that strengthen brand identity and drive engagement.",
     technologies: ["Adobe Photoshop", "Adobe Illustrator"],
     current: false,
   },

@@ -18,8 +18,8 @@ const skills = [
   "HTML",
   "CSS",
   "JavaScript",
-  "Tailwind CSS (In Progress)",
-  "React JS (In Progress)",
+  "Tailwind CSS",
+  "React JS",
   "Three JS (In Progress)",
   "Next JS (In Progress)",
 ];
