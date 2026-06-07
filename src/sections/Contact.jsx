@@ -6,10 +6,9 @@ import {
   CheckCircle,
   Mail,
   MapPin,
-  Phone,
   Send,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const contactInfo = [
   {
@@ -18,19 +17,102 @@ const contactInfo = [
     value: "designer21.misa@gmail.com",
     href: "mailto:designer21.misa@gmail.com",
   },
-  /*{
-    icon: Phone,
-    label: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
-  }, */
   {
     icon: MapPin,
     label: "Location",
     value: "Cabuyao City, Laguna, Philippines",
-    href: "#",
   },
 ];
+
+const availabilityMessages = [
+  "Open to new opportunities, freelance projects, and creative collaborations focused on building engaging, modern, and impactful digital experiences.",
+];
+const contactCardBeamDuration = 8;
+const contactCardBeamDelay = contactCardBeamDuration / 6;
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const TypewriterText = ({
+  strings,
+  typeSpeed = 34,
+  deleteSpeed = 18,
+  pauseTime = 1800,
+}) => {
+  const [typewriterState, setTypewriterState] = useState(() => ({
+    characterIndex: prefersReducedMotion() ? strings[0].length : 0,
+    deleting: false,
+    phraseIndex: 0,
+  }));
+
+  const currentPhrase = strings[typewriterState.phraseIndex];
+  const visibleText = currentPhrase.slice(0, typewriterState.characterIndex);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) {
+      return undefined;
+    }
+
+    const isTyped =
+      !typewriterState.deleting &&
+      typewriterState.characterIndex === currentPhrase.length;
+    const isDeleted =
+      typewriterState.deleting && typewriterState.characterIndex === 0;
+    const delay = isTyped
+      ? pauseTime
+      : isDeleted
+        ? 450
+        : typewriterState.deleting
+          ? deleteSpeed
+          : typeSpeed;
+
+    const timeout = window.setTimeout(() => {
+      setTypewriterState((currentState) => {
+        const phrase = strings[currentState.phraseIndex];
+
+        if (!currentState.deleting && currentState.characterIndex < phrase.length) {
+          return {
+            ...currentState,
+            characterIndex: currentState.characterIndex + 1,
+          };
+        }
+
+        if (!currentState.deleting) {
+          return { ...currentState, deleting: true };
+        }
+
+        if (currentState.characterIndex > 0) {
+          return {
+            ...currentState,
+            characterIndex: currentState.characterIndex - 1,
+          };
+        }
+
+        return {
+          characterIndex: 0,
+          deleting: false,
+          phraseIndex: (currentState.phraseIndex + 1) % strings.length,
+        };
+      });
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [currentPhrase.length, deleteSpeed, pauseTime, strings, typeSpeed, typewriterState]);
+
+  return (
+    <div className="contact-typewriter-shell text-sm text-muted-foreground">
+      <p className="sr-only">{strings.join(" ")}</p>
+      <span aria-hidden="true" className="invisible block">
+        {currentPhrase}
+      </span>
+      <span aria-hidden="true" className="contact-typewriter-text">
+        {visibleText}
+        <span className="contact-typewriter-cursor" />
+      </span>
+    </div>
+  );
+};
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -217,44 +299,58 @@ export const Contact = () => {
 
           {/* Contact Info */}
           <div className="min-w-0 space-y-5 animate-fade-in animation-delay-400 sm:space-y-6">
-            <div className="glass min-w-0 rounded-2xl p-5 sm:rounded-3xl sm:p-8">
+            <div
+              className="contact-beam-card glass min-w-0 rounded-2xl p-5 sm:rounded-3xl sm:p-8"
+              style={{
+                "--about-card-beam-delay": "0s",
+                "--about-card-beam-duration": `${contactCardBeamDuration}s`,
+              }}
+            >
               <h3 className="mb-5 text-lg font-semibold sm:mb-6 sm:text-xl">
                 Contact Information
               </h3>
               <div className="space-y-3 sm:space-y-4">
-                {contactInfo.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.href}
-                    className="group flex min-w-0 items-start gap-3 rounded-xl p-2 transition-colors hover:bg-surface sm:items-center sm:gap-4 sm:p-4"
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20 sm:h-12 sm:w-12">
-                      <item.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-sm text-muted-foreground">
-                        {item.label}
+                {contactInfo.map((item) => {
+                  const Item = item.href ? "a" : "div";
+
+                  return (
+                    <Item
+                      key={item.label}
+                      href={item.href}
+                      className={`group flex min-w-0 items-start gap-3 rounded-xl p-2 transition-colors sm:items-center sm:gap-4 sm:p-4 ${
+                        item.href ? "hover:bg-surface" : ""
+                      }`}
+                    >
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20 sm:h-12 sm:w-12">
+                        <item.icon className="w-5 h-5 text-primary" />
                       </div>
-                      <div className="break-words font-medium [overflow-wrap:anywhere]">
-                        {item.value}
+                      <div className="min-w-0">
+                        <div className="text-sm text-muted-foreground">
+                          {item.label}
+                        </div>
+                        <div className="break-words font-medium [overflow-wrap:anywhere]">
+                          {item.value}
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                ))}
+                    </Item>
+                  );
+                })}
               </div>
             </div>
 
             {/* Availability Card */}
-            <div className="glass min-w-0 rounded-2xl border border-primary/30 p-5 sm:rounded-3xl sm:p-8">
+            <div
+              className="contact-beam-card glass min-w-0 rounded-2xl border border-primary/30 p-5 sm:rounded-3xl sm:p-8"
+              style={{
+                "--about-card-beam-delay": `${contactCardBeamDelay}s`,
+                "--about-card-beam-duration": `${contactCardBeamDuration}s`,
+              }}
+            >
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                 <span className="font-medium">Currently Available</span>
               </div>
-              <p className="text-muted-foreground text-sm">
-                Open to new opportunities, freelance projects,
-                and creative collaborations focused on building engaging,
-                modern, and impactful digital experiences.
-              </p>
+              <TypewriterText strings={availabilityMessages} />
             </div>
           </div>
         </div>

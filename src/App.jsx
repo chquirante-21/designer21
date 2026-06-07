@@ -4,29 +4,29 @@ import { About } from "@/sections/About";
 import { Projects } from "@/sections/Projects";
 import { Experience } from "@/sections/Experience";
 import { Contact } from "@/sections/Contact";
-import { ProjectsPage } from "@/pages/ProjectsPage";
 import { Footer } from "./layout/Footer";
 import { BackToTopButton } from "@/components/BackToTopButton";
+import { useEffect } from "react";
 
 function App() {
-  const isProjectsPage = window.location.pathname.startsWith("/projects");
+  useEffect(() => {
+    if (window.location.pathname.startsWith("/projects")) {
+      window.history.replaceState(null, "", "/#projects");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Navbar />
-      {isProjectsPage ? (
-        <ProjectsPage />
-      ) : (
-        <main>
-          <Hero />
-          <About />
-          <Projects />
-          <Experience />
-          <Contact />
-        </main>
-      )}
-      {!isProjectsPage ? <BackToTopButton /> : null}
-      <Footer hideContactLink={!isProjectsPage} />
+      <main>
+        <Hero />
+        <About />
+        <Projects />
+        <Experience />
+        <Contact />
+      </main>
+      <BackToTopButton />
+      <Footer />
     </div >
   )
 }

@@ -7,7 +7,13 @@
       "default",
       {
         "ignore": [
-          "backdrop-filter"
+          "backdrop-filter",
+          "background-color: color-mix(in srgb, var(--color-surface) 50%, transparent)",
+          "border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent)",
+          "background-color: color-mix(in srgb, var(--color-surface) 80%, transparent)",
+          "border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent)",
+          "background-color: color-mix(in srgb, #26c4b8 15%, transparent)",
+          "scrollbar-width: none"
         ]
       }
     ]

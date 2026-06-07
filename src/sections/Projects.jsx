@@ -1,11 +1,62 @@
-import { ArrowUpRight, Expand, X } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
 import { projects } from "@/data/projects";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const featuredProjects = projects.slice(0, 4);
+const featuredProjects = projects.slice(0, 9);
+const bentoLayouts = [
+  "sm:col-start-1 sm:row-start-1",
+  "sm:col-span-2 sm:col-start-2 sm:row-start-1",
+  "sm:col-start-4 sm:row-start-1",
+  "sm:col-start-1 sm:row-span-2 sm:row-start-2 lg:row-span-1",
+  "col-span-2 row-span-2 sm:col-start-2 sm:row-start-2 lg:row-span-1",
+  "sm:col-start-4 sm:row-span-2 sm:row-start-2 lg:row-span-1",
+  "sm:col-start-1 sm:row-start-4 lg:row-start-3",
+  "sm:col-span-2 sm:col-start-2 sm:row-start-4 lg:row-start-3",
+  "sm:col-start-4 sm:row-start-4 lg:row-start-3",
+];
+
+const isVideoSource = (src = "") => /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(src);
+
+const ProjectMedia = ({
+  project,
+  className,
+  mediaRef,
+  preview = false,
+  source: sourceOverride,
+}) => {
+  const source = sourceOverride ?? (preview ? project.image : project.video ?? project.image);
+
+  if (isVideoSource(source)) {
+    return (
+      <video
+        ref={mediaRef}
+        src={source}
+        aria-label={`${project.title} ${preview ? "preview" : "video"}`}
+        autoPlay
+        controls={!preview}
+        loop
+        muted
+        playsInline
+        preload={preview ? "auto" : "metadata"}
+        className={className}
+      />
+    );
+  }
+
+  return <img src={source} alt={project.title} className={className} />;
+};
 
 const ProjectImageViewer = ({ project, onClose }) => {
+  const mediaRef = useRef(null);
+  const gallerySources = project.gallery?.length
+    ? project.gallery
+    : [project.video ?? project.image];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentSource = gallerySources[currentIndex] ?? gallerySources[0];
+  const canGoPrevious = currentIndex > 0;
+  const canGoNext = currentIndex < gallerySources.length - 1;
+
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     const closeOnEscape = (event) => {
@@ -23,6 +74,15 @@ const ProjectImageViewer = ({ project, onClose }) => {
     };
   }, [onClose]);
 
+  useEffect(() => {
+    const media = mediaRef.current;
+
+    if (media instanceof HTMLVideoElement) {
+      media.currentTime = 0;
+      void media.play().catch(() => {});
+    }
+  }, [currentSource]);
+
   return (
     <div
       role="dialog"
@@ -33,8 +93,9 @@ const ProjectImageViewer = ({ project, onClose }) => {
     >
       <button
         type="button"
-        aria-label="Close full image view"
+        aria-label="Close full view"
         onClick={onClose}
+        autoFocus
         className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-card/90 text-white transition-colors hover:bg-primary"
       >
         <X className="h-5 w-5" />
@@ -44,12 +105,47 @@ const ProjectImageViewer = ({ project, onClose }) => {
         onClick={(event) => event.stopPropagation()}
         className="flex max-h-full max-w-full items-center justify-center overflow-hidden rounded-lg bg-black shadow-2xl"
       >
-        <img
-          src={project.image}
-          alt={project.title}
+        <ProjectMedia
+          project={project}
+          mediaRef={mediaRef}
+          source={currentSource}
           className="max-h-[calc(100vh-4rem)] max-w-[calc(100vw-2rem)] object-contain md:max-h-[calc(100vh-5rem)] md:max-w-[calc(100vw-5rem)]"
         />
       </div>
+
+      {gallerySources.length > 1 ? (
+        <>
+          {canGoPrevious ? (
+            <button
+              type="button"
+              aria-label={`View previous ${project.title} sample`}
+              onClick={(event) => {
+                event.stopPropagation();
+                setCurrentIndex((index) => Math.max(index - 1, 0));
+              }}
+              className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-card/90 text-white opacity-50 shadow-xl transition-all hover:bg-primary hover:opacity-100 focus-visible:bg-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:opacity-100 sm:left-5 sm:h-12 sm:w-12"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+          ) : null}
+
+          {canGoNext ? (
+            <button
+              type="button"
+              aria-label={`View next ${project.title} sample`}
+              onClick={(event) => {
+                event.stopPropagation();
+                setCurrentIndex((index) =>
+                  Math.min(index + 1, gallerySources.length - 1),
+                );
+              }}
+              className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-card/90 text-white opacity-50 shadow-xl transition-all hover:bg-primary hover:opacity-100 focus-visible:bg-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:opacity-100 sm:right-5 sm:h-12 sm:w-12"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          ) : null}
+        </>
+      ) : null}
     </div>
   );
 };
@@ -82,65 +178,70 @@ export const Projects = () => {
             </p>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {featuredProjects.map((project, idx) => (
-              <div
-                key={project.id}
-                className="group glass rounded-2xl overflow-hidden animate-fade-in md:row-span-1"
-                style={{ animationDelay: `${(idx + 1) * 100}ms` }}
-              >
-                {/* Image */}
-                <button
-                  type="button"
-                  aria-label={`Open full view of ${project.title}`}
-                  onClick={() => setSelectedProject(project)}
-                  className="relative block aspect-video w-full overflow-hidden text-left"
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-card via-card/25 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-background/75 text-white backdrop-blur transition-colors group-hover:bg-primary">
-                      <Expand className="h-6 w-6" />
-                    </span>
-                  </div>
-                </button>
+          {/* Bento Projects Grid */}
+          <div className="project-bento-grid grid grid-cols-2 auto-rows-[140px] gap-3 sm:grid-cols-4 sm:auto-rows-[150px] sm:gap-4">
+            {featuredProjects.map((project, idx) => {
+              const isCenterTile = idx === 4;
 
-                {/* Content */}
-                <div className="p-6 space-y-4">
-                  <div className="flex items-start justify-between">
-                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <ArrowUpRight
-                      className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"
+              return (
+                <div
+                  key={project.id}
+                  className={`group relative overflow-hidden rounded-2xl border border-border/70 bg-card shadow-xl shadow-black/20 animate-fade-in transition-all duration-500 hover:border-primary/70 hover:shadow-2xl hover:shadow-primary/15 focus-within:border-primary/70 focus-within:shadow-2xl focus-within:shadow-primary/15 sm:rounded-3xl ${bentoLayouts[idx]}`}
+                  style={{ animationDelay: `${(idx + 1) * 100}ms` }}
+                >
+                  <button
+                    type="button"
+                    aria-label={`Open full view of ${project.title}`}
+                    onClick={() => setSelectedProject(project)}
+                    className="relative block h-full w-full overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                  >
+                    <ProjectMedia
+                      project={project}
+                      preview
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-4 py-1.5 rounded-full bg-surface text-xs font-medium border border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all duration-300"
-                      >
-                        {tag}
+                    <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/10 to-transparent opacity-75 transition-opacity duration-500 group-hover:opacity-90" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(32,178,166,0.24),transparent_38%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100" />
+                    <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/80 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                    <div className="absolute right-3 top-3 flex items-center gap-2 text-white/70 sm:right-4 sm:top-4">
+                      <span className="text-xs font-semibold tracking-[0.2em]">
+                        0{idx + 1}
                       </span>
-                    ))}
-                  </div>
+                    </div>
+
+                    <div className="absolute inset-0 flex items-center justify-center opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+                      <span className={`flex scale-90 items-center justify-center rounded-full border border-white/15 bg-background/75 text-white shadow-xl backdrop-blur-md transition-all duration-300 group-hover:scale-100 group-hover:border-primary/70 group-hover:bg-primary ${
+                        isCenterTile ? "h-14 w-14 sm:h-16 sm:w-16" : "h-11 w-11 sm:h-14 sm:w-14"
+                      }`}>
+                        <Expand className={isCenterTile ? "h-6 w-6 sm:h-7 sm:w-7" : "h-5 w-5 sm:h-6 sm:w-6"} />
+                      </span>
+                    </div>
+
+                    <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                      <span className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-primary sm:block">
+                        {project.category}
+                      </span>
+                      <h3 className={`mt-1 font-semibold text-white drop-shadow-lg transition-colors duration-300 group-hover:text-primary ${
+                        isCenterTile ? "text-lg sm:text-2xl" : "text-sm sm:text-base"
+                      }`}>
+                        {project.title}
+                      </h3>
+                    </div>
+                  </button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* View All CTA */}
           <div className="text-center mt-12 animate-fade-in animation-delay-500">
-            <AnimatedBorderButton as="a" href="https://www.figma.com/design/xH2r0dsSEM0F8i10JQOa0R/Old--Files?node-id=0-1&t=uHdrMCd1CBjsFBmu-1" target="_blank">
+            <AnimatedBorderButton
+              as="a"
+              href="https://www.figma.com/design/xH2r0dsSEM0F8i10JQOa0R/Old-Files?node-id=0-1&t=LYoCjN5Dhoxo0MUv-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View more samples
               <ArrowUpRight className="w-5 h-5" />
             </AnimatedBorderButton>
@@ -150,6 +251,7 @@ export const Projects = () => {
 
       {selectedProject ? (
         <ProjectImageViewer
+          key={selectedProject.id}
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
         />

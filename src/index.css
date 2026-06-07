@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Playfair Display", serif;
+  --font-sans: "Manrope", sans-serif;
+  --font-serif: "Lora", serif;
 
   --color-background: #0f1418;
   --color-foreground: #f0f2f5;
@@ -24,6 +24,18 @@
 
   --color-highlight: #f5a623;
   --color-surface: #1a2329;
+}
+
+@property --about-card-beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --button-border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
 @layer base {
@@ -162,23 +174,53 @@
     animation-delay: 800ms;
   }
 
-  @keyframes animated-border {
-    0% {
-      stroke-dashoffset: 400;
-    }
-    100% {
-      stroke-dashoffset: -550;
-    }
+  .animated-border {
+    isolation: isolate;
   }
 
-  .group:hover .animated-border-path {
-    animation: animated-border 1.5s linear infinite;
+  .animated-border::before {
+    background: conic-gradient(
+      from var(--button-border-angle),
+      transparent 0deg 294deg,
+      rgb(32 178 166 / 0%) 308deg,
+      rgb(32 178 166 / 85%) 334deg,
+      rgb(232 255 253) 344deg,
+      rgb(32 178 166 / 75%) 354deg,
+      transparent 360deg
+    );
+    border-radius: inherit;
+    content: "";
+    filter: drop-shadow(0 0 7px rgb(32 178 166 / 70%));
+    inset: 0;
+    opacity: 0;
+    padding: 1px;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 250ms ease;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
   }
 
-  .animated-border:hover {
+  .animated-border:hover,
+  .animated-border:focus-visible {
     background-color: color-mix(in srgb, #26c4b8 15%, transparent);
     backdrop-filter: blur(16px);
     box-shadow: 0 0 20px color-mix(in srgb, #26c4b8 20%, transparent);
+  }
+
+  .animated-border:hover::before,
+  .animated-border:focus-visible::before {
+    animation: button-border-beam 1.5s linear infinite;
+    opacity: 1;
+  }
+
+  @keyframes button-border-beam {
+    to {
+      --button-border-angle: 360deg;
+    }
   }
 
   .timeline-glow {
@@ -187,11 +229,533 @@
       0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
   }
 
+  .experience-timeline-track {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--color-border) 95%, transparent) 8%,
+      color-mix(in srgb, var(--color-border) 95%, transparent) 92%,
+      transparent
+    );
+    border-radius: 999px;
+    transform: translateX(-50%);
+    width: 2px;
+  }
+
+  .experience-timeline-progress {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-primary) 95%, white 5%),
+      color-mix(in srgb, var(--color-primary) 78%, #7c3aed 22%),
+      color-mix(in srgb, var(--color-primary) 72%, #8b5cf6 28%)
+    );
+    border-radius: inherit;
+    box-shadow:
+      0 0 18px color-mix(in srgb, var(--color-primary) 44%, transparent),
+      0 0 46px color-mix(in srgb, #8b5cf6 30%, transparent);
+    display: block;
+    left: 0;
+    min-height: 0.25rem;
+    position: absolute;
+    top: 0;
+    transition: height 120ms linear;
+    width: 100%;
+  }
+
+  .experience-timeline-orb {
+    animation: experience-orb-pulse 1.8s ease-in-out infinite;
+    background: var(--color-primary);
+    border: 2px solid color-mix(in srgb, white 75%, var(--color-primary));
+    border-radius: 999px;
+    bottom: 0;
+    box-shadow:
+      0 0 0 8px color-mix(in srgb, var(--color-primary) 13%, transparent),
+      0 0 28px color-mix(in srgb, var(--color-primary) 88%, transparent),
+      0 0 58px color-mix(in srgb, #8b5cf6 55%, transparent);
+    height: 1.05rem;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, 50%);
+    width: 1.05rem;
+  }
+
+  .experience-timeline-dot {
+    align-items: center;
+    background: var(--color-background);
+    border: 2px solid color-mix(in srgb, var(--color-border) 92%, white 8%);
+    border-radius: 999px;
+    box-shadow: 0 0 0 6px var(--color-background);
+    display: flex;
+    height: 1.25rem;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    transition:
+      background-color 350ms ease,
+      border-color 350ms ease,
+      box-shadow 350ms ease,
+      transform 350ms ease;
+    width: 1.25rem;
+  }
+
+  .experience-timeline-dot span {
+    background: color-mix(in srgb, var(--color-muted-foreground) 70%, white);
+    border-radius: inherit;
+    height: 0.35rem;
+    opacity: 0.85;
+    transition:
+      background-color 350ms ease,
+      opacity 350ms ease,
+      transform 350ms ease;
+    width: 0.35rem;
+  }
+
+  .experience-timeline-dot.is-passed {
+    border-color: color-mix(in srgb, var(--color-primary) 78%, white);
+    box-shadow:
+      0 0 0 6px var(--color-background),
+      0 0 22px color-mix(in srgb, var(--color-primary) 42%, transparent);
+  }
+
+  .experience-timeline-dot.is-passed span {
+    background: var(--color-primary);
+    opacity: 1;
+  }
+
+  .experience-timeline-dot.is-active {
+    background: var(--color-primary);
+    border-color: color-mix(in srgb, white 86%, var(--color-primary));
+    box-shadow:
+      0 0 0 7px color-mix(in srgb, var(--color-background) 88%, transparent),
+      0 0 24px color-mix(in srgb, var(--color-primary) 86%, transparent),
+      0 0 52px color-mix(in srgb, #8b5cf6 42%, transparent);
+    transform: translate(-50%, -50%) scale(1.14);
+  }
+
+  .experience-timeline-dot.is-active span {
+    background: white;
+    transform: scale(0.7);
+  }
+
+  .experience-timeline-card {
+    filter: blur(10px);
+    isolation: isolate;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(2rem) scale(0.97);
+    transition:
+      opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 350ms ease,
+      box-shadow 350ms ease;
+  }
+
+  .experience-timeline-card::before {
+    background:
+      radial-gradient(
+        circle at 18% 0%,
+        color-mix(in srgb, var(--color-primary) 16%, transparent),
+        transparent 34%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--color-primary) 10%, transparent),
+        transparent 42%
+      );
+    content: "";
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 350ms ease;
+    z-index: -1;
+  }
+
+  .experience-timeline-card::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-primary) 75%, white),
+      transparent
+    );
+    content: "";
+    height: 1px;
+    left: 1.5rem;
+    opacity: 0;
+    position: absolute;
+    right: 1.5rem;
+    top: 0;
+    transition: opacity 350ms ease;
+  }
+
+  .experience-timeline-card-left {
+    transform: translate(-2.5rem, 2rem) scale(0.97);
+  }
+
+  .experience-timeline-card-right {
+    transform: translate(2.5rem, 2rem) scale(0.97);
+  }
+
+  .experience-timeline-card.is-visible {
+    filter: blur(0);
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+
+  .experience-timeline-card.is-active {
+    border-color: color-mix(in srgb, var(--color-primary) 58%, transparent);
+    box-shadow:
+      0 24px 70px rgb(0 0 0 / 0.3),
+      0 0 34px color-mix(in srgb, var(--color-primary) 14%, transparent);
+  }
+
+  .experience-timeline-card.is-active::before,
+  .experience-timeline-card.is-active::after {
+    opacity: 1;
+  }
+
+  @keyframes experience-orb-pulse {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 8px color-mix(in srgb, var(--color-primary) 13%, transparent),
+        0 0 28px color-mix(in srgb, var(--color-primary) 88%, transparent),
+        0 0 58px color-mix(in srgb, #8b5cf6 55%, transparent);
+    }
+
+    50% {
+      box-shadow:
+        0 0 0 12px color-mix(in srgb, var(--color-primary) 8%, transparent),
+        0 0 36px color-mix(in srgb, var(--color-primary) 95%, transparent),
+        0 0 78px color-mix(in srgb, #8b5cf6 60%, transparent);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .experience-timeline-card-left,
+    .experience-timeline-card-right {
+      transform: translateY(2rem) scale(0.97);
+    }
+
+    .experience-timeline-card.is-visible {
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .experience-timeline-progress,
+    .experience-timeline-dot,
+    .experience-timeline-dot span,
+    .experience-timeline-card,
+    .experience-timeline-card::before,
+    .experience-timeline-card::after {
+      transition: none;
+    }
+
+    .experience-timeline-orb {
+      animation: none;
+    }
+
+    .experience-timeline-card,
+    .experience-timeline-card-left,
+    .experience-timeline-card-right,
+    .experience-timeline-card.is-visible {
+      filter: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
   }
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  .about-text-rotator {
+    min-height: 13.5rem;
+    position: relative;
+  }
+
+  .about-text-slide {
+    animation: about-text-slide var(--about-text-duration) ease-in-out infinite;
+    animation-delay: var(--about-text-delay);
+    filter: blur(7px);
+    inset: 0;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(14px);
+  }
+
+  .about-text-progress-track {
+    bottom: 0;
+    display: flex;
+    gap: 0.5rem;
+    left: 0;
+    position: absolute;
+  }
+
+  .about-text-progress {
+    animation: about-text-progress var(--about-text-duration) linear infinite;
+    animation-delay: var(--about-text-delay);
+    background: color-mix(in srgb, var(--color-primary) 28%, transparent);
+    border-radius: 999px;
+    height: 2px;
+    overflow: hidden;
+    position: relative;
+    width: 2.5rem;
+  }
+
+  .about-text-progress::after {
+    animation: about-text-progress-fill var(--about-text-duration) linear infinite;
+    animation-delay: var(--about-text-delay);
+    background: var(--color-primary);
+    border-radius: inherit;
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  @keyframes about-text-slide {
+    0% {
+      filter: blur(7px);
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    4%,
+    28% {
+      filter: blur(0);
+      opacity: 1;
+      transform: translateY(0);
+    }
+    34%,
+    100% {
+      filter: blur(6px);
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes about-text-progress {
+    0%,
+    34% {
+      opacity: 1;
+    }
+    38%,
+    100% {
+      opacity: 0.45;
+    }
+  }
+
+  @keyframes about-text-progress-fill {
+    0% {
+      transform: scaleX(0);
+    }
+    28%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (max-width: 639px) {
+    .about-text-rotator {
+      min-height: 20rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-text-slide {
+      animation: none;
+    }
+
+    .about-text-slide:first-of-type {
+      filter: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .about-text-progress,
+    .about-text-progress::after {
+      animation: none;
+    }
+
+    .about-text-progress:first-child::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .about-highlight-card,
+  .contact-beam-card {
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about-highlight-card::before,
+  .contact-beam-card::before {
+    animation: about-card-border-beam var(--about-card-beam-duration) linear
+      infinite;
+    animation-delay: var(--about-card-beam-delay);
+    background: conic-gradient(
+      from var(--about-card-beam-angle),
+      transparent 0deg 306deg,
+      rgb(32 178 166 / 0%) 314deg,
+      rgb(32 178 166 / 86%) 338deg,
+      rgb(202 255 251 / 100%) 346deg,
+      rgb(32 178 166 / 74%) 353deg,
+      transparent 360deg
+    );
+    border-radius: inherit;
+    content: "";
+    filter: drop-shadow(0 0 6px rgb(32 178 166 / 72%));
+    inset: 0;
+    opacity: 0;
+    padding: 1px;
+    pointer-events: none;
+    position: absolute;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .contact-typewriter-shell {
+    line-height: 1.75;
+    position: relative;
+  }
+
+  .contact-typewriter-text {
+    inset: 0;
+    position: absolute;
+  }
+
+  .contact-typewriter-cursor {
+    animation: contact-typewriter-cursor 800ms steps(2, start) infinite;
+    background: var(--color-primary);
+    border-radius: 999px;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color-primary) 65%, transparent);
+    display: inline-block;
+    height: 1em;
+    margin-left: 0.2rem;
+    transform: translateY(0.16em);
+    width: 2px;
+  }
+
+  @keyframes contact-typewriter-cursor {
+    0%,
+    45% {
+      opacity: 1;
+    }
+
+    46%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes about-card-border-beam {
+    0% {
+      --about-card-beam-angle: 0deg;
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    14% {
+      opacity: 1;
+    }
+    16.666% {
+      --about-card-beam-angle: 360deg;
+      opacity: 0;
+    }
+    100% {
+      --about-card-beam-angle: 360deg;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-highlight-card::before,
+    .contact-beam-card::before {
+      animation: none;
+    }
+
+    .contact-typewriter-cursor {
+      animation: none;
+    }
+  }
+
+  .project-bento-grid {
+    --bento-columns: 0.85fr 1fr 1fr 0.85fr;
+    --bento-rows: 150px 280px 150px;
+  }
+
+  @media (min-width: 1024px) {
+    .project-bento-grid {
+      grid-template-columns: var(--bento-columns);
+      grid-template-rows: var(--bento-rows);
+      transition:
+        grid-template-columns 450ms cubic-bezier(0.22, 1, 0.36, 1),
+        grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .project-bento-grid:has(
+        > :is(:nth-child(1), :nth-child(4), :nth-child(7)):is(
+            :hover,
+            :focus-within
+          )
+      ) {
+      --bento-columns: 1.1fr 0.95fr 0.95fr 0.75fr;
+    }
+
+    .project-bento-grid:has(
+        > :is(:nth-child(2), :nth-child(5), :nth-child(8)):is(
+            :hover,
+            :focus-within
+          )
+      ) {
+      --bento-columns: 0.78fr 1.1fr 1.1fr 0.78fr;
+    }
+
+    .project-bento-grid:has(
+        > :is(:nth-child(3), :nth-child(6), :nth-child(9)):is(
+            :hover,
+            :focus-within
+          )
+      ) {
+      --bento-columns: 0.75fr 0.95fr 0.95fr 1.1fr;
+    }
+
+    .project-bento-grid:has(
+        > :is(:nth-child(1), :nth-child(2), :nth-child(3)):is(
+            :hover,
+            :focus-within
+          )
+      ) {
+      --bento-rows: 210px 245px 125px;
+    }
+
+    .project-bento-grid:has(
+        > :is(:nth-child(4), :nth-child(5), :nth-child(6)):is(
+            :hover,
+            :focus-within
+          )
+      ) {
+      --bento-rows: 125px 330px 125px;
+    }
+
+    .project-bento-grid:has(
+        > :is(:nth-child(7), :nth-child(8), :nth-child(9)):is(
+            :hover,
+            :focus-within
+          )
+      ) {
+      --bento-rows: 125px 245px 210px;
+    }
   }
 }

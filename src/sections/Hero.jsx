@@ -8,20 +8,22 @@ import {
   Twitter,
 } from "lucide-react";
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
+import { BehanceIcon } from "@/components/BehanceIcon";
 
 const skills = [
-  "Adobe Photoshop",
-  "Adobe Illustrator",
-  "Adobe After Effects",
-  "Adobe Premiere Pro",
+  "Adobe Creative Suite",
   "Figma App",
   "HTML",
   "CSS",
-  "JavaScript",
+  "JavaScript (In Progress)",
+  "Vite",
   "Tailwind CSS",
-  "React JS",
-  "Three JS (In Progress)",
-  "Next JS (In Progress)",
+  "React JS (In Progress)",
+  "ChatGPT",
+  "Codex",
+  "Remotion",
+  "Github Copilot",
+  "Google Stitch",
 ];
 
 const heroDots = Array.from({ length: 30 }, (_, index) => ({
@@ -41,6 +43,7 @@ const socialLinks = [
     label: "LinkedIn",
   },
   { icon: Twitter, href: "https://x.com/chaqkoy", label: "Twitter" },
+  { icon: BehanceIcon, href: "https://www.behance.net/chaqkoy", label: "Behance" },
 ];
 
 export const Hero = () => {

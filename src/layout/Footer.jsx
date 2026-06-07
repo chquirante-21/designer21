@@ -1,23 +1,21 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
+import { BehanceIcon } from "@/components/BehanceIcon";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/chquirante-21", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/designer21/", label: "LinkedIn" },
   { icon: Twitter, href: "https://x.com/chaqkoy", label: "Twitter" },
+  { icon: BehanceIcon, href: "https://www.behance.net/chaqkoy", label: "Behance" },
 ];
 
 const footerLinks = [
   { href: "/#about", label: "About" },
   { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#contact", label: "Contact" },
 ];
 
-export const Footer = ({ hideContactLink = false }) => {
+export const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const visibleFooterLinks = hideContactLink
-    ? footerLinks.filter((link) => link.href !== "/#contact")
-    : footerLinks;
 
   return (
     <footer className="py-12 border-t border-border">
@@ -35,7 +33,7 @@ export const Footer = ({ hideContactLink = false }) => {
 
           {/* Links */}
           <nav className="flex flex-wrap justify-center gap-6">
-            {visibleFooterLinks.map((link) => (
+            {footerLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}

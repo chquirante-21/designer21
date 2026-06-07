@@ -1,3 +1,6 @@
+import { BriefcaseBusiness, CalendarDays } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
 const experiences = [
   {
     period: "May 2019 — March 2026",
@@ -6,7 +9,7 @@ const experiences = [
     description:
       "Experienced Senior Web and Graphic Designer specializing in responsive web design, UI/UX, branding, and digital marketing creatives, creating visually compelling and user-focused experiences that drive engagement and strengthen brand presence.",
     technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro"],
-    current: true,
+    current: false,
   },
   {
     period: "Aug 2016 — April 2019",
@@ -37,9 +40,141 @@ const experiences = [
   },
 ];
 
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export const Experience = () => {
+  const timelineRef = useRef(null);
+  const itemRefs = useRef([]);
+  const [timelineProgress, setTimelineProgress] = useState(() =>
+    prefersReducedMotion() ? 1 : 0,
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [revealedItems, setRevealedItems] = useState(() =>
+    experiences.map(() => prefersReducedMotion()),
+  );
+
+  useEffect(() => {
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    if (reducedMotionQuery.matches) {
+      return undefined;
+    }
+
+    let frameId;
+
+    const updateTimeline = () => {
+      const timeline = timelineRef.current;
+
+      if (!timeline) return;
+
+      const timelineRect = timeline.getBoundingClientRect();
+      const viewportAnchor = window.innerHeight * 0.48;
+      const nextProgress = clamp(
+        (viewportAnchor - timelineRect.top) / Math.max(timelineRect.height, 1),
+        0,
+        1,
+      );
+
+      setTimelineProgress((currentProgress) =>
+        Math.abs(currentProgress - nextProgress) > 0.003
+          ? nextProgress
+          : currentProgress,
+      );
+
+      const closestIndex = itemRefs.current.reduce(
+        (closest, item, index) => {
+          if (!item) return closest;
+
+          const itemRect = item.getBoundingClientRect();
+          const dotY = itemRect.top + 40;
+          const distance = Math.abs(dotY - viewportAnchor);
+
+          return distance < closest.distance ? { distance, index } : closest;
+        },
+        { distance: Number.POSITIVE_INFINITY, index: 0 },
+      ).index;
+
+      setActiveIndex((currentIndex) =>
+        currentIndex === closestIndex ? currentIndex : closestIndex,
+      );
+
+      setRevealedItems((currentItems) => {
+        let hasChange = false;
+        const nextItems = [...currentItems];
+
+        itemRefs.current.forEach((item, index) => {
+          if (!item || nextItems[index]) return;
+
+          const itemRect = item.getBoundingClientRect();
+          const shouldReveal =
+            itemRect.top < window.innerHeight * 0.92 && itemRect.bottom > 0;
+
+          if (shouldReveal) {
+            nextItems[index] = true;
+            hasChange = true;
+          }
+        });
+
+        return hasChange ? nextItems : currentItems;
+      });
+    };
+
+    const requestTimelineUpdate = () => {
+      if (frameId) cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(updateTimeline);
+    };
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        setRevealedItems((currentItems) => {
+          let hasChange = false;
+          const nextItems = [...currentItems];
+
+          entries.forEach((entry) => {
+            const index = Number(entry.target.getAttribute("data-index"));
+
+            if (entry.isIntersecting && !nextItems[index]) {
+              nextItems[index] = true;
+              hasChange = true;
+            }
+          });
+
+          return hasChange ? nextItems : currentItems;
+        });
+      },
+      {
+        rootMargin: "-12% 0px -18% 0px",
+        threshold: 0.25,
+      },
+    );
+
+    itemRefs.current.forEach((item) => {
+      if (item) revealObserver.observe(item);
+    });
+
+    requestTimelineUpdate();
+    window.addEventListener("scroll", requestTimelineUpdate, {
+      passive: true,
+    });
+    window.addEventListener("resize", requestTimelineUpdate);
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+      revealObserver.disconnect();
+      window.removeEventListener("scroll", requestTimelineUpdate);
+      window.removeEventListener("resize", requestTimelineUpdate);
+    };
+  }, []);
+
+  const progressHeight = `${Math.round(timelineProgress * 1000) / 10}%`;
+
   return (
-    <section id="experience" className="py-20 relative overflow-hidden">
+    <section id="experience" className="py-24 relative overflow-hidden">
       <div
         className="absolute top-1/2 left-1/4 w-96
        h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2"
@@ -71,68 +206,96 @@ export const Experience = () => {
            animate-fade-in animation-delay-200"
           >
             A timeline of my professional growth, from curious beginner to
-            senior engineer leading teams and building products at scale.
+            senior designer crafting thoughtful digital experiences.
           </p>
         </div>
 
         {/* Timeline */}
-        <div className="relative">
-          <div className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/70 via-primary/30 to-transparent md:-translate-x-1/2 shadow-[0_0_25px_rgba(32,178,166,0.8)]" />
+        <ol
+          ref={timelineRef}
+          aria-label="Professional experience timeline"
+          className="experience-timeline relative mx-auto max-w-6xl pb-8"
+        >
+          <div
+            aria-hidden="true"
+            className="experience-timeline-track absolute bottom-10 left-5 top-10 md:left-1/2"
+          >
+            <span
+              className="experience-timeline-progress"
+              style={{ height: progressHeight }}
+            >
+              <span className="experience-timeline-orb" />
+            </span>
+          </div>
 
-          {/* Experience Items */}
-          <div className="space-y-12">
-            {experiences.map((exp, idx) => (
-              <div
-                key={idx}
-                className="relative grid md:grid-cols-2 gap-8 animate-fade-in"
-                style={{ animationDelay: `${(idx + 1) * 150}ms` }}
+          {experiences.map((exp, idx) => {
+            const isLeftAligned = idx % 2 === 0;
+            const isActive = idx === activeIndex;
+            const isPassed = idx <= activeIndex;
+            const isRevealed = revealedItems[idx];
+
+            return (
+              <li
+                key={`${exp.company}-${exp.period}`}
+                ref={(element) => {
+                  itemRefs.current[idx] = element;
+                }}
+                data-index={idx}
+                className={`experience-timeline-item relative flex pb-16 last:pb-0 md:pb-24 ${
+                  isLeftAligned ? "md:justify-start" : "md:justify-end"
+                }`}
               >
-                {/* Timeline Dot */}
-                <div className="absolute left-0 md:left-1/2 top-0 w-3 h-3 bg-primary rounded-full -translate-x-1/2 ring-4 ring-background z-10">
-                  {exp.current && (
-                    <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
-                  )}
+                <div
+                  aria-hidden="true"
+                  className={`experience-timeline-dot absolute left-5 top-10 z-20 md:left-1/2 ${
+                    isPassed ? "is-passed" : ""
+                  } ${isActive ? "is-active" : ""}`}
+                >
+                  <span />
                 </div>
 
-                {/* Content */}
-                <div
-                  className={`pl-8 md:pl-0 ${
-                    idx % 2 === 0
-                      ? "md:pr-16 md:text-right"
-                      : "md:col-start-2 md:pl-16"
+                <article
+                  className={`experience-timeline-card glass relative ml-12 w-[calc(100%-3rem)] rounded-2xl border border-primary/20 p-5 shadow-xl shadow-black/20 md:ml-0 md:w-[calc(50%-3.5rem)] md:p-6 ${
+                    isLeftAligned
+                      ? "experience-timeline-card-left"
+                      : "experience-timeline-card-right"
+                  } ${isRevealed ? "is-visible" : ""} ${
+                    isActive ? "is-active" : ""
                   }`}
                 >
-                  <div
-                    className={`glass p-6 rounded-2xl border border-primary/30 hover:border-primary/50 transition-all duration-500`}
-                  >
-                    <span className="text-sm text-primary font-medium">
-                      {exp.period}
-                    </span>
-                    <h3 className="text-xl font-semibold mt-2">{exp.role}</h3>
-                    <p className="text-muted-foreground">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground mt-4">
-                      {exp.description}
-                    </p>
-                    <div
-                      className={`flex flex-wrap gap-2 mt-4 ${
-                        idx % 2 === 0 ? "md:justify-end" : ""
-                      }`}
-                    >
-                      {exp.technologies.map((tech, techIdx) => (
-                        <span
-                          key={techIdx}
-                          className="px-3 py-1 bg-surface text-xs rounded-full text-muted-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-primary">
+                    <CalendarDays className="h-4 w-4" />
+                    <span>{exp.period}</span>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+
+                  <h3 className="text-xl font-semibold text-white md:text-2xl">
+                    {exp.role}
+                  </h3>
+
+                  <div className="mt-2 flex items-center gap-2 text-muted-foreground">
+                    <BriefcaseBusiness className="h-4 w-4 text-primary/80" />
+                    <p>{exp.company}</p>
+                  </div>
+
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                    {exp.description}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {exp.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-border/70 bg-surface/80 px-3 py-1 text-xs text-muted-foreground transition-colors duration-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

@@ -1,28 +1,31 @@
 // Edit this file when you want to change project titles, images, tags, or links.
+// Add images or videos to public/projects, then update the paths below.
+// "image" controls the bento thumbnail. "gallery" controls the full-view carousel.
 export const projects = [
   {
     id: "fintech-dashboard",
     title: "Fintech Dashboard",
-    category: "Web Application",
+    //category: "Web Application",
     year: "2026",
     duration: "8 weeks",
     rating: "Featured",
-    image: "/projects/project1.png",
+    image: "/projects/01/project1.png",
+    gallery: ["/projects/01/project1.png", "/projects/01/project1-1.png"],
     description:
       "A comprehensive financial analytics platform with real-time data visualization, portfolio management, and AI-powered insights.",
     role: "UI design, frontend build, dashboard interaction design",
     tags: ["Figma", "Adobe Photoshop", "Adobe Illustrator", "React JS", "Tailwindcss"],
-    //link: "/projects#fintech-dashboard",
     //github: "#",
   },
   {
     id: "ecommerce-platform",
     title: "E-Commerce Platform",
-    category: "Commerce",
+    //category: "Commerce",
     year: "2025",
     duration: "10 weeks",
     rating: "Case Study",
-    image: "/projects/project2.png",
+    image: "/projects/02/ecom1.png",
+    gallery: ["/projects/02/ecom1.png", "/projects/02/ecom2.png", "/projects/02/ecom3.png"],
     description:
       "A full-featured e-commerce solution with inventory management, payment processing, and analytics dashboard.",
     role: "Product layout, visual system, responsive storefront UI",
@@ -33,11 +36,12 @@ export const projects = [
   {
     id: "ai-writing-assistant",
     title: "Design System",
-    category: "AI Product",
+    //category: "AI Product",
     year: "2025",
     duration: "6 weeks",
     rating: "Prototype",
-    image: "/projects/project3.png",
+    image: "/projects/03/ds1-dark.png",
+    gallery: ["/projects/03/ds1-dark.png", "/projects/03/ds1-light.png", "/projects/03/ds2-dark.png", "/projects/03/ds2-light.png"],
     description:
       "The system is designed with a clear 8px grid and WCAG-compliant contrast to ensure it's ready for high-fidelity product development.",
     role: "Interface design, prompt workflow, frontend experience",
@@ -48,11 +52,12 @@ export const projects = [
   {
     id: "project-management-tool",
     title: "Project Management Tool",
-    category: "SaaS",
+    //category: "SaaS Application",
     year: "2024",
     duration: "12 weeks",
     rating: "Team Tool",
-    image: "/projects/project4.png",
+    image: "/projects/04/pmt1.png",
+    gallery: ["/projects/04/pmt1.png", "/projects/04/pmt2.png", "/projects/04/pmt3.png", "/projects/04/pmt4.png"],
     description:
       "A collaborative workspace for teams with real-time updates, task tracking, and integrations.",
     role: "Design system, task views, interaction polish",
@@ -60,14 +65,16 @@ export const projects = [
     //link: "#",
     //github: "#",
   },
+  // Additional samples used by the homepage bento gallery and projects page.
   {
     id: "creative-brand-system",
     title: "Creative Brand System",
-    category: "Brand Design",
+    //category: "Brand Design",
     year: "2024",
     duration: "4 weeks",
     rating: "Visual Identity",
-    image: "/projects/project1.png",
+    image: "/projects/05/cbs1.png",
+    gallery: ["/projects/05/cbs1.png", "/projects/05/cbs2.png", "/projects/05/cbs3.png", "/projects/05/cbs4.png"],
     description:
       "A flexible visual identity package for digital campaigns, social assets, and landing page design.",
     role: "Brand direction, graphic design, web creative assets",
@@ -77,12 +84,14 @@ export const projects = [
   },
   {
     id: "motion-launch-kit",
-    title: "Motion Launch Kit",
-    category: "Motion Design",
+    title: "Motion Design",
+    //category: "Motion Design",
     year: "2023",
     duration: "3 weeks",
     rating: "Campaign",
-    image: "/projects/project2.png",
+    image: "/projects/06/sampleani1.png",
+    video: "/projects/06/sampleani1.mp4",
+    gallery: ["/projects/06/sampleani1.mp4"],
     description:
       "A launch-ready motion package with animated banners, social teasers, and conversion-focused landing visuals.",
     role: "After Effects animation, creative direction, export pipeline",
@@ -92,12 +101,13 @@ export const projects = [
   },
   {
     id: "portfolio-redesign",
-    title: "Portfolio Redesign",
-    category: "Personal Site",
+    title: "Homepage Design",
+    //category: "Personal Site",
     year: "2023",
     duration: "5 weeks",
     rating: "Frontend",
-    image: "/projects/project3.png",
+    image: "/projects/07/hm1.png",
+    gallery: ["/projects/07/hm1.png", "/projects/07/hm2.png", "/projects/07/hm3.png", "/projects/07/hm4.png"],
     description:
       "A polished portfolio experience focused on clear storytelling, fast scanning, and high-impact project presentation.",
     role: "Frontend development, responsive layout, visual polish",
@@ -107,12 +117,13 @@ export const projects = [
   },
   {
     id: "studio-booking-ui",
-    title: "Studio Booking UI",
-    category: "Booking Flow",
+    title: "Banner Designs",
+    //category: "Booking Flow",
     year: "2022",
     duration: "7 weeks",
     rating: "UX Flow",
-    image: "/projects/project4.png",
+    image: "/projects/08/bd1.webp",
+    gallery: ["/projects/08/bd1.webp", "/projects/08/bd2.webp", "/projects/08/bd3.png", "/projects/08/bd4.jpg", "/projects/08/bd5.jpg"],
     description:
       "A booking interface designed for quick schedule comparison, simple checkout, and clean mobile usability.",
     role: "UX design, UI components, mobile-first prototype",
@@ -120,39 +131,20 @@ export const projects = [
     //link: "#",
     //github: "#",
   },
-];
-
-export const projectRows = [
   {
-    title: "Featured Projects",
-    projects,
-  },
-  {
-    title: "Web UI and Frontend",
-    projects: [
-      projects[6],
-      projects[0],
-      projects[3],
-      projects[1],
-      projects[2],
-      projects[7],
-      projects[4],
-      projects[5],
-    ],
-  },
-  {
-    title: "Brand and Motion Work",
-    projects: [
-      projects[4],
-      projects[5],
-      projects[2],
-      projects[7],
-      projects[6],
-      projects[0],
-      projects[3],
-      projects[1],
-    ],
+    id: "digital-campaign-kit",
+    title: "Digital Campaign Kit",
+    //category: "Creative Direction",
+    year: "2022",
+    duration: "4 weeks",
+    rating: "Campaign",
+    image: "/projects/09/dck1.png",
+    gallery: ["/projects/09/dck1.png", "/projects/09/dck2.png", "/projects/09/dck3.png", "/projects/09/dck4.png"],
+    description:
+      "A coordinated collection of visual assets designed for product launches, social media campaigns, and digital advertising.",
+    role: "Creative direction, campaign design, digital asset production",
+    tags: ["Photoshop", "Illustrator", "Social Media"],
+    //link: "#",
+    //github: "#",
   },
 ];
-
-export const featuredProject = projects[0];
