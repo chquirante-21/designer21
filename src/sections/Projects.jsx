@@ -2,6 +2,7 @@ import { ArrowUpRight, ChevronLeft, ChevronRight, Expand, X } from "lucide-react
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
 import { projects } from "@/data/projects";
 import { useEffect, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const featuredProjects = projects.slice(0, 9);
 const bentoLayouts = [
@@ -44,7 +45,15 @@ const ProjectMedia = ({
     );
   }
 
-  return <img src={source} alt={project.title} className={className} />;
+  return (
+    <img
+      src={source}
+      alt={project.title}
+      loading={preview ? "lazy" : "eager"}
+      decoding="async"
+      className={className}
+    />
+  );
 };
 
 const ProjectImageViewer = ({ project, onClose }) => {
@@ -103,14 +112,43 @@ const ProjectImageViewer = ({ project, onClose }) => {
 
       <div
         onClick={(event) => event.stopPropagation()}
-        className="flex max-h-full max-w-full items-center justify-center overflow-hidden rounded-lg bg-black shadow-2xl"
+        className="grid max-h-full w-full max-w-6xl overflow-hidden rounded-xl bg-card shadow-2xl lg:grid-cols-[1fr_320px]"
       >
-        <ProjectMedia
-          project={project}
-          mediaRef={mediaRef}
-          source={currentSource}
-          className="max-h-[calc(100vh-4rem)] max-w-[calc(100vw-2rem)] object-contain md:max-h-[calc(100vh-5rem)] md:max-w-[calc(100vw-5rem)]"
-        />
+        <div className="flex min-h-0 items-center justify-center bg-black">
+          <ProjectMedia
+            project={project}
+            mediaRef={mediaRef}
+            source={currentSource}
+            className="max-h-[calc(100vh-18rem)] max-w-full object-contain sm:max-h-[calc(100vh-15rem)] lg:max-h-[calc(100vh-6rem)]"
+          />
+        </div>
+        <aside className="max-h-[40vh] overflow-y-auto border-t border-border bg-card p-5 lg:max-h-[calc(100vh-4rem)] lg:border-l lg:border-t-0 lg:p-6">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            {project.rating} / {project.year}
+          </span>
+          <h3 className="mt-3 text-2xl font-bold text-foreground">
+            {project.title}
+          </h3>
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">
+            {project.description}
+          </p>
+          <div className="mt-5 rounded-2xl border border-border/80 bg-surface/60 p-4">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              Role
+            </div>
+            <p className="mt-2 text-sm leading-6 text-foreground">{project.role}</p>
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs text-primary"
+                key={tag}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </aside>
       </div>
 
       {gallerySources.length > 1 ? (
@@ -192,7 +230,12 @@ export const Projects = () => {
                   <button
                     type="button"
                     aria-label={`Open full view of ${project.title}`}
-                    onClick={() => setSelectedProject(project)}
+                    onClick={() => {
+                      trackEvent("project_open_click", {
+                        project: project.title,
+                      });
+                      setSelectedProject(project);
+                    }}
                     className="relative block h-full w-full overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
                   >
                     <ProjectMedia
@@ -241,6 +284,7 @@ export const Projects = () => {
               href="https://www.figma.com/design/xH2r0dsSEM0F8i10JQOa0R/Old-Files?node-id=0-1&t=LYoCjN5Dhoxo0MUv-1"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("view_more_samples_click")}
             >
               View more samples
               <ArrowUpRight className="w-5 h-5" />

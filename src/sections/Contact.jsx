@@ -9,6 +9,7 @@ import {
   Send,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const contactInfo = [
   {
@@ -131,6 +132,7 @@ export const Contact = () => {
 
     setIsLoading(true);
     setSubmitStatus({ type: null, message: "" });
+    trackEvent("contact_form_submit_attempt");
     try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -157,6 +159,7 @@ export const Contact = () => {
         type: "success",
         message: "Message sent successfully! I'll get back to you soon.",
       });
+      trackEvent("contact_form_submit_success");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       console.error("EmailJS error:", error);
@@ -167,6 +170,7 @@ export const Contact = () => {
           error?.message ||
           "Failed to send message. Please try again later.",
       });
+      trackEvent("contact_form_submit_error");
     } finally {
       setIsLoading(false);
     }
@@ -317,6 +321,11 @@ export const Contact = () => {
                     <Item
                       key={item.label}
                       href={item.href}
+                      onClick={
+                        item.href
+                          ? () => trackEvent("contact_info_click", { label: item.label })
+                          : undefined
+                      }
                       className={`group flex min-w-0 items-start gap-3 rounded-xl p-2 transition-colors sm:items-center sm:gap-4 sm:p-4 ${
                         item.href ? "hover:bg-surface" : ""
                       }`}

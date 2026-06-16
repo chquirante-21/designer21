@@ -1,0 +1,16 @@
+{
+  "name": "Charlo Quirante Portfolio",
+  "short_name": "CQ Portfolio",
+  "description": "Web, graphic, and UI/UX design portfolio of Charlo Quirante.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1418",
+  "theme_color": "#20b2a6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}

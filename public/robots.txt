@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://charlo-quirante.vercel.app/sitemap.xml

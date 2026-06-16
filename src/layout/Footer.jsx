@@ -1,5 +1,6 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { BehanceIcon } from "@/components/BehanceIcon";
+import { trackEvent } from "@/lib/analytics";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/chquirante-21", label: "GitHub" },
@@ -10,6 +11,7 @@ const socialLinks = [
 
 const footerLinks = [
   { href: "/#about", label: "About" },
+  { href: "/#services", label: "Services" },
   { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
 ];
@@ -53,6 +55,7 @@ export const Footer = () => {
                 aria-label={social.label}
                 target={social.href === "#" ? undefined : "_blank"}
                 rel={social.href === "#" ? undefined : "noopener noreferrer"}
+                onClick={() => trackEvent("footer_social_link_click", { label: social.label })}
                 className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
               >
                 <social.icon className="w-5 h-5" />

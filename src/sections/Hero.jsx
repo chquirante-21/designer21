@@ -2,13 +2,13 @@ import { Button } from "@/components/Button";
 import {
   ArrowRight,
   ChevronDown,
-  Download,
   Github,
   Linkedin,
   Twitter,
 } from "lucide-react";
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
 import { BehanceIcon } from "@/components/BehanceIcon";
+import { trackEvent } from "@/lib/analytics";
 
 const skills = [
   "Adobe Creative Suite",
@@ -16,13 +16,12 @@ const skills = [
   "HTML",
   "CSS",
   "JavaScript (In Progress)",
-  "Vite",
   "Tailwind CSS",
   "React JS (In Progress)",
   "ChatGPT",
   "Codex",
-  "Remotion",
-  "Github Copilot",
+  "Remotion (For Motion Graphics)",
+  "Hey Gen AI (For Video Generation)",
   "Google Stitch",
 ];
 
@@ -52,8 +51,11 @@ export const Hero = () => {
       {/* Bg */}
       <div className="absolute inset-0">
         <img
-          src="/hero-bg.jpg"
-          alt="Hero image"
+          src="/hero-bg.webp"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
@@ -92,42 +94,52 @@ export const Hero = () => {
 
             {/* Headline */}
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in animation-delay-100">
-                Crafting <span className="text-primary glow-text">Digital</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in animation-delay-100">
+                <span className="text-primary glow-text">Web, UI/UX, and Graphic</span>
                 <br />
-                Experiences with
+                designer helping brands build polished websites,
                 <br />
                 <span className="font-serif italic font-normal text-white">
-                  Precision and Purpose.
+                  campaign visuals, and digital experiences.
                 </span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-                Hi, I'm Charlo Quirante — I bridge the gap between design and development, helping brands communicate through thoughtful UI, robust code, and timeless graphic identity.
+                Hi, I'm Charlo Quirante. I help businesses turn ideas into clear visual systems, responsive websites, and digital creatives built to look sharp and earn trust.
               </p>
             </div>
 
             {/* CTAs */}
             <div className="flex flex-wrap justify-center gap-4 animate-fade-in animation-delay-300 md:justify-start">
-              <Button as="a" href="#contact" size="lg">
+              <Button
+                as="a"
+                href="#contact"
+                size="lg"
+                onClick={() => trackEvent("hero_contact_click")}
+              >
                 Contact Me <ArrowRight className="w-5 h-5" />
               </Button>
-              <div className="group/cv relative">
-                <div
-                  id="cv-notice"
-                  role="tooltip"
-                  className="pointer-events-none absolute bottom-[calc(100%+0.85rem)] left-1/2 z-20 -translate-x-1/2 translate-y-2 whitespace-nowrap rounded-xl border border-primary/25 bg-card px-4 py-2.5 text-sm font-medium text-foreground opacity-0 shadow-xl shadow-black/35 backdrop-blur transition-all duration-200 group-hover/cv:translate-y-0 group-hover/cv:opacity-100 group-focus-within/cv:translate-y-0 group-focus-within/cv:opacity-100"
-                >
-                  Sorry! Not yet Implemented.
-                  <span className="absolute left-1/2 top-full h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-primary/25 bg-card" />
-                </div>
+              <AnimatedBorderButton
+                as="a"
+                href="#projects"
+                onClick={() => trackEvent("hero_view_work_click")}
+              >
+                View Work
+                <ChevronDown className="w-5 h-5" />
+              </AnimatedBorderButton>
+              {/*
+                Add a real CV file to public/ later, then reintroduce this as:
+                <AnimatedBorderButton as="a" href="/charlo-quirante-cv.pdf" download>
+              */}
+              {/*
                 <AnimatedBorderButton
-                  type="button"
-                  aria-describedby="cv-notice"
+                  as="a"
+                  href="/charlo-quirante-cv.pdf"
+                  download
                 >
                   <Download className="w-5 h-5" />
                   Download CV
                 </AnimatedBorderButton>
-              </div>
+              */}
             </div>
 
             {/* Social Links */}
@@ -140,6 +152,7 @@ export const Hero = () => {
                   aria-label={social.label}
                   target={social.href === "#" ? undefined : "_blank"}
                   rel={social.href === "#" ? undefined : "noopener noreferrer"}
+                  onClick={() => trackEvent("social_link_click", { label: social.label })}
                   className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
                 >
                   {<social.icon className="w-5 h-5" />}
@@ -147,6 +160,7 @@ export const Hero = () => {
               ))}
             </div>
           </div>
+          
           {/* Right Column - Profile Image */}
           <div className="relative animate-fade-in animation-delay-300">
             {/* Profile Image */}
@@ -159,8 +173,10 @@ export const Hero = () => {
               />
               <div className="relative glass rounded-3xl p-2 glow-border">
                 <img
-                  src="/profile-photo.jpg"
+                  src="/profile-photo.webp"
                   alt="Charlo Quirante"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full aspect-[4/5] object-cover rounded-2xl"
                 />
 
@@ -175,7 +191,7 @@ export const Hero = () => {
                 </div>
                 {/* Stats Badge */}
                 <div className="absolute -top-4 -left-4 glass rounded-xl px-4 py-3 animate-float animation-delay-500">
-                  <div className="text-2xl font-bold text-primary">5+</div>
+                  <div className="text-2xl font-bold text-primary">10+</div>
                   <div className="text-xs text-muted-foreground">
                     Years Exp.
                   </div>

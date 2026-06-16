@@ -1,9 +1,11 @@
 import { Button } from "@/components/Button";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const navLinks = [
     { href: "/#about", label: "About" },
+    { href: "/#services", label: "Services" },
     { href: "/#projects", label: "Projects" },
     { href: "/#experience", label: "Experience" },
 ];
@@ -49,7 +51,12 @@ export const Navbar = () => {
                 
                 {/* CTA Button */}
                 <div className="hidden md:block">
-                    <Button as="a" href="/#contact" size="sm">
+                    <Button
+                        as="a"
+                        href="/#contact"
+                        size="sm"
+                        onClick={() => trackEvent("nav_contact_click")}
+                    >
                         <span className="text-sm font-normal">Contact Me</span>
                     </Button>
                 </div>
@@ -85,7 +92,10 @@ export const Navbar = () => {
                         <Button
                             as="a"
                             href="/#contact"
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            onClick={() => {
+                                trackEvent("mobile_nav_contact_click");
+                                setIsMobileMenuOpen(false);
+                            }}
                         >
                             Contact Me
                         </Button>
