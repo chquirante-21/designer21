@@ -1,5 +1,4 @@
 import { Button } from "@/components/Button";
-import emailjs from "@emailjs/browser";
 import {
   AlertCircle,
   ArrowUp,
@@ -30,6 +29,7 @@ const availabilityMessages = [
 ];
 const contactCardBeamDuration = 8;
 const contactCardBeamDelay = contactCardBeamDuration / 6;
+const contactEmail = "designer21.misa@gmail.com";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -134,26 +134,25 @@ export const Contact = () => {
     setSubmitStatus({ type: null, message: "" });
     trackEvent("contact_form_submit_attempt");
     try {
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          sourceUrl: window.location.href,
+        }),
+      });
 
-      if (!serviceId || !templateId || !publicKey) {
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
         throw new Error(
-          "EmailJS configuration is missing. Please check your environment variables."
+          result.message ||
+            "Message could not be sent. Please email me directly instead.",
         );
       }
-
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        },
-        publicKey
-      );
 
       setSubmitStatus({
         type: "success",
@@ -162,7 +161,7 @@ export const Contact = () => {
       trackEvent("contact_form_submit_success");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("EmailJS error:", error);
+      console.error("Contact form error:", error);
       setSubmitStatus({
         type: "error",
         message:
@@ -298,6 +297,16 @@ export const Contact = () => {
                   <p className="text-sm">{submitStatus.message}</p>
                 </div>
               )}
+              <p className="text-center text-sm text-muted-foreground">
+                Having trouble? Email me directly at{" "}
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="font-medium text-primary hover:text-primary/80"
+                >
+                  {contactEmail}
+                </a>
+                .
+              </p>
             </form>
           </div>
 
