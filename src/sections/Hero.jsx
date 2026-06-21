@@ -11,18 +11,22 @@ import { BehanceIcon } from "@/components/BehanceIcon";
 import { trackEvent } from "@/lib/analytics";
 
 const skills = [
-  "Adobe Creative Suite",
-  "Figma App",
+  "Photoshop",
+  "Illustrator",
+  "After Effects (For Motion Graphics)",
+  "Premiere Pro (For Video Editing)",
+  "Figma",
   "HTML",
   "CSS",
-  "JavaScript (In Progress)",
   "Tailwind CSS",
-  "React JS (In Progress)",
-  "ChatGPT",
-  "Codex",
-  "Remotion (For Motion Graphics)",
-  "Hey Gen AI (For Video Generation)",
-  "Google Stitch",
+  "JavaScript",
+  "React JS",
+  "ChatGPT (For AI-Assisted Design)",
+  "Codex (For AI-Assisted Coding)",
+  "Remotion (For Motion Graphics and Video Creation)",
+  "HeyFrame (For Video Editing and Content Creation)",
+  "Google Stitch (For UI/UX Prototyping)",
+  "Gemini (For AI-Generated Content)",
 ];
 
 const heroDots = Array.from({ length: 30 }, (_, index) => ({
@@ -215,9 +219,9 @@ export const Hero = () => {
               className="absolute right-0 top-0 bottom-0 w-32
              bg-gradient-to-l from-background to-transparent z-10"
             />
-            <div className="flex animate-marquee">
+            <div className="flex w-max animate-marquee [will-change:transform]">
               {[...skills, ...skills].map((skill, idx) => (
-                <div key={idx} className="flex-shrink-0 px-8 py-4">
+                <div key={idx} className="flex-shrink-0 px-6 py-4">
                   <span className="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors">
                     {skill}
                   </span>
