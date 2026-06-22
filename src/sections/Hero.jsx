@@ -24,7 +24,7 @@ const skills = [
   "ChatGPT (For AI-Assisted Design)",
   "Codex (For AI-Assisted Coding)",
   "Remotion (For Motion Graphics and Video Creation)",
-  "HeyFrame (For Video Editing and Content Creation)",
+  "HyperFrames (For Video Editing and Content Creation)",
   "Google Stitch (For UI/UX Prototyping)",
   "Gemini (For AI-Generated Content)",
 ];
