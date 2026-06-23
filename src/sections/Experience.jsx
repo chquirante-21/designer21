@@ -7,8 +7,8 @@ const experiences = [
     role: "Senior Web and Graphic Designer",
     company: "Tri7 Solutions Inc. LTD",
     description:
-      "Experienced Senior Web and Graphic Designer specializing in responsive web design, UI/UX, branding, and digital marketing creatives, creating visually compelling and user-focused experiences that drive engagement and strengthen brand presence.",
-    technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro"],
+      "Led digital design work across website layouts, campaign graphics, brand assets, UI/UX support, and motion/video creative. Balanced visual direction with hands-on production so marketing and product materials stayed polished, consistent, and ready for launch.",
+    technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro", "Responsive Design"],
     current: false,
   },
   {
@@ -16,8 +16,8 @@ const experiences = [
     role: "Web Designer",
     company: "Walo Group Information Technologies Inc.",
     description:
-      "Experienced Web Designer specializing in responsive, user-centered websites, creating modern and visually engaging digital experiences that enhance usability, performance, and brand impact across all devices.",
-    technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro", "HTML", "CSS",],
+      "Designed responsive websites and supporting digital visuals with a focus on clean hierarchy, usability, and brand presentation. Worked across Adobe tools, Figma, HTML, and CSS to bridge design intent with practical web execution.",
+    technologies: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe After Effects", "Adobe Premiere Pro", "HTML", "CSS"],
     current: false,
   },
   {
@@ -25,7 +25,7 @@ const experiences = [
     role: "Web and Graphic Designer",
     company: "E-Fox Solutions Inc.",
     description:
-      "Creative Web and Graphic Designer specializing in responsive websites, branding, and digital marketing creatives, delivering visually compelling and user-focused designs that strengthen brand identity and drive engagement.",
+      "Created web graphics, page layouts, brand materials, and marketing creatives for digital use. Built a strong foundation in translating business needs into clear visual concepts and production-ready assets.",
     technologies: ["Adobe Photoshop", "Adobe Illustrator"],
     current: false,
   },
@@ -34,8 +34,8 @@ const experiences = [
     role: "Web Designer",
     company: "Webxpress Incorporated",
     description:
-      "Delivered custom web solutions for small businesses and startups. Built 15+ websites and applications, handling everything from design to deployment.",
-    technologies: ["Adobe Photoshop", "Adobe Illustrator", "WordPress", "Bootstrap Framework"],
+      "Supported custom website projects from visual layout through delivery, producing clean page designs and assets for small business and startup clients.",
+    technologies: ["Adobe Photoshop", "Adobe Illustrator", "WordPress", "Bootstrap"],
     current: false,
   },
 ];
@@ -195,7 +195,7 @@ export const Experience = () => {
             text-secondary-foreground"
           >
             Experience that{" "}
-            <span className="font-serif italic font-normal text-white">
+            <span className="font-serif font-normal text-white">
               {" "}
               speaks volumes.
             </span>
@@ -205,8 +205,8 @@ export const Experience = () => {
             className="text-muted-foreground
            animate-fade-in animation-delay-200"
           >
-            A timeline of my professional growth, from curious beginner to
-            senior designer crafting thoughtful digital experiences.
+            A career built across graphic design, campaign creative, responsive
+            web design, UI support, motion, and production-ready digital assets.
           </p>
         </div>
 

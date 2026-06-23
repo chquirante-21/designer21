@@ -192,7 +192,7 @@ export const Contact = () => {
           </span>
           <h2 className="mb-4 mt-4 text-3xl font-bold text-secondary-foreground animate-fade-in animation-delay-100 sm:mb-6 sm:text-4xl md:text-5xl">
             Let's build{" "}
-            <span className="font-serif italic font-normal text-white">
+            <span className="font-serif font-normal text-white">
               something great.
             </span>
           </h2>

@@ -201,18 +201,17 @@ export const Projects = () => {
           {/* Section Header */}
           <div className="text-center mx-auto max-w-3xl mb-16">
             <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">
-              Featured Samples
+              Featured Design Work
             </span>
             <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
-              Samples that
-              <span className="font-serif italic font-normal text-white">
+              Brand, campaign, and digital work that
+              <span className="font-serif font-normal text-white">
                 {" "}
-                make an impact.
+                shows range.
               </span>
             </h2>
             <p className="text-muted-foreground animate-fade-in animation-delay-200">
-              From UI/UX design and interactive interfaces to branding and digital creatives,
-              these works showcase my ability to turn ideas into impactful and meaningful digital experiences.
+              The first pieces highlight the graphic design work most relevant to senior design roles: brand systems, campaign kits, banners, motion, and digital assets. UI and web samples follow to show how that visual thinking carries into product and frontend work.
             </p>
           </div>
 

@@ -13,20 +13,21 @@ import { trackEvent } from "@/lib/analytics";
 const skills = [
   "Photoshop",
   "Illustrator",
-  "After Effects (For Motion Graphics)",
-  "Premiere Pro (For Video Editing)",
+  "After Effects",
+  "Premiere Pro",
   "Figma",
+  "Brand Systems",
+  "Campaign Design",
+  "Digital Ads",
+  "Social Media Creative",
+  "Motion Graphics",
+  "Responsive Web Design",
   "HTML",
   "CSS",
   "Tailwind CSS",
   "JavaScript",
   "React JS",
-  "ChatGPT (For AI-Assisted Design)",
-  "Codex (For AI-Assisted Coding)",
-  "Remotion (For Motion Graphics and Video Creation)",
-  "HyperFrames (For Video Editing and Content Creation)",
-  "Google Stitch (For UI/UX Prototyping)",
-  "Gemini (For AI-Generated Content)",
+  "AI-Assisted Creative Workflows",
 ];
 
 const heroDots = Array.from({ length: 30 }, (_, index) => ({
@@ -92,23 +93,23 @@ export const Hero = () => {
             <div className="animate-fade-in">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
                 <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                Designer and Developer
+                Senior Graphic Designer
               </span>
             </div>
 
             {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in animation-delay-100">
-                <span className="text-primary glow-text">Web, UI/UX, and Graphic</span>
+                <span className="text-primary glow-text">Senior graphic designer</span>
                 <br />
-                designer helping brands build polished websites,
+                shaping brand visuals, campaign systems,
                 <br />
-                <span className="font-serif italic font-normal text-white">
-                  campaign visuals, and digital experiences.
+                <span className="font-serif font-normal text-white">
+                  and polished digital experiences.
                 </span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-                Hi, I'm Charlo Quirante. I help businesses turn ideas into clear visual systems, responsive websites, and digital creatives built to look sharp and earn trust.
+                Hi, I'm Charlo Quirante. I bring 10+ years across graphic design, web design, UI/UX, and motion to help teams produce clear, consistent creative for launches, social campaigns, websites, and brand moments.
               </p>
             </div>
 
@@ -189,7 +190,7 @@ export const Hero = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                     <span className="text-sm font-medium">
-                      Available for work
+                      Open to senior roles
                     </span>
                   </div>
                 </div>
@@ -208,7 +209,7 @@ export const Hero = () => {
         {/* Skills Section */}
         <div className="mt-20 animate-fade-in animation-delay-600">
           <p className="text-sm text-muted-foreground mb-6 text-center">
-            Technologies Behind My Work
+            Creative Tools & Strengths
           </p>
           <div className="relative overflow-hidden">
             <div

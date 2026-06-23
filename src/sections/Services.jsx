@@ -68,7 +68,7 @@ export const Services = () => {
             </span>
             <h2 className="mt-4 text-4xl font-bold leading-tight text-secondary-foreground md:text-5xl">
               Design support for{" "}
-              <span className="font-serif font-normal italic text-white">
+              <span className="font-serif font-normal text-white">
                 brands that need to look ready.
               </span>
             </h2>

@@ -1,9 +1,9 @@
 import { Code2, Lightbulb, Paintbrush, Rocket, TabletSmartphone, Users } from "lucide-react";
 
 const aboutParagraphs = [
-  "I’m a creative Web, Graphic and UI/UX Designer with years of experience crafting modern digital experiences that are both visually engaging and user-focused. My passion for design started from a strong interest in creativity and how impactful visuals can shape user interaction and brand identity.",
-  "I specialize in UI/UX design, digital creatives, responsive web design, and branding, creating everything from sleek website interfaces to high-converting marketing materials and social media campaigns. My approach blends clean aesthetics, usability, and strategic design thinking to deliver impactful and memorable experiences.",
-  "Beyond design, I enjoy exploring new creative trends, improving my frontend design skills, and continuously learning modern tools and technologies that help bring ideas to life.",
+  "I’m a Senior Graphic Designer with 10+ years of experience building digital-first creative across brand systems, campaign visuals, web layouts, social assets, motion graphics, and UI/UX support.",
+  "My work is strongest where visual direction needs to become usable production: clear layouts, consistent typography, polished image treatment, responsive design, and creative assets that stay cohesive across marketing channels.",
+  "Alongside Adobe Creative Cloud and Figma, I bring frontend awareness and AI-assisted workflows that help me move quickly from concept to finished creative while keeping the final output sharp, organized, and brand-ready.",
 ];
 const aboutAnimationSeconds = 8;
 const aboutParagraphDelay = aboutAnimationSeconds / aboutParagraphs.length;
@@ -12,37 +12,37 @@ const aboutCardBeamDelay = aboutAnimationSeconds / 6;
 const highlights = [
   {
     icon: Paintbrush,
-    title: "Minimal & Modern Design",
+    title: "Senior Visual Design",
     description:
-      "Creating timeless, user-centered designs that are visually engaging, scalable, and built to leave a lasting impact.",
+      "Creating polished, recruiter-ready brand and campaign visuals with strong hierarchy, typography, and production detail.",
   },
   {
     icon: TabletSmartphone,
-    title: "Responsive Web Design",
+    title: "Digital Campaign Systems",
     description:
-      "Creating responsive, user-focused designs that adapt seamlessly across all devices while delivering clean, engaging, and visually impactful digital experiences.",
+      "Designing social creatives, banners, launch assets, and landing visuals that feel consistent across every placement.",
   },
   {
     icon: Code2,
-    title: "Clean Code",
+    title: "Web & UI Awareness",
     description:
-      "Building clean, organized, and scalable code that ensures long-term performance, maintainability, and seamless user experiences.",
+      "Pairing graphic design craft with responsive web, UI, and frontend knowledge so creative ideas translate cleanly on screen.",
   },
   {
     icon: Rocket,
-    title: "Performance",
+    title: "Production Speed",
     description:
-      "Optimizing performance to deliver fast, smooth, and seamless digital experiences across all devices.",
+      "Moving from concept to final files with organized workflows, clear asset structure, and careful quality control.",
   },
   {
     icon: Users,
     title: "Collaboration",
-    description: "Collaborating with teams to transform ideas into engaging, user-focused digital experiences.",
+    description: "Working with stakeholders, developers, and marketing teams to turn briefs into practical, polished creative.",
   },
   {
     icon: Lightbulb,
-    title: "Innovation",
-    description: "Driven by innovation through modern design and creative solutions.",
+    title: "Creative Adaptability",
+    description: "Blending classic design judgment with current tools, trends, motion, and AI-assisted creative exploration.",
   },
 ];
 
@@ -59,10 +59,10 @@ export const About = () => {
             </div>
 
             <h2 className="animate-fade-in text-4xl font-bold leading-tight text-secondary-foreground animation-delay-100 md:text-5xl">
-              Building the future,
-              <span className="font-serif font-normal italic text-white">
+              Design craft for brands,
+              <span className="font-serif font-normal text-white">
                 {" "}
-                one component at a time.
+                campaigns, and digital teams.
               </span>
             </h2>
 
@@ -100,8 +100,7 @@ export const About = () => {
 
             <div className="glass animate-fade-in rounded-2xl p-6 glow-border animation-delay-300">
               <p className="text-lg font-medium italic text-foreground">
-                "My mission is to craft digital experiences that are not only functional and visually engaging, but also intuitive, user-friendly,
-                and memorable - creating designs that users enjoy interacting with and brands are proud to showcase."
+                "My goal is to make every visual touchpoint feel intentional, consistent, and ready for the audience it needs to reach."
               </p>
             </div>
           </div>
