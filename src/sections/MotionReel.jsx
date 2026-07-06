@@ -46,14 +46,14 @@ export const MotionReel = () => {
               Motion Reel
             </span>
             <h2 className="mt-4 text-3xl font-bold leading-tight text-secondary-foreground md:text-4xl">
-              Motion work recruiters can
+              Motion graphics and video ads
               <span className="font-serif font-normal text-white">
                 {" "}
-                see right away.
+                built for digital campaigns.
               </span>
             </h2>
             <p className="mt-5 leading-7 text-muted-foreground">
-              A quick look at my motion and video direction for campaign assets, launch teasers, and digital ads. These samples connect my graphic design background with After Effects, Premiere Pro, and production-ready export workflows.
+              A quick look at my motion and video direction for campaign assets, launch teasers, and digital ads. I combine After Effects and Premiere Pro with AI-assisted tools like HeyGen and Remotion to explore presenter videos, motion drafts, and production-ready exports.
             </p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
