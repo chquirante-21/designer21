@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 
 const navLinks = [
+    { href: "/#reel", label: "Reel" },
     { href: "/#about", label: "About" },
     { href: "/#services", label: "Services" },
     { href: "/#projects", label: "Projects" },

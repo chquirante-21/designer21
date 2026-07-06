@@ -1,5 +1,6 @@
 import { Navbar } from "@/layout/Navbar";
 import { Hero } from "@/sections/Hero";
+import { MotionReel } from "@/sections/MotionReel";
 import { About } from "@/sections/About";
 import { Services } from "@/sections/Services";
 import { Workflow } from "@/sections/Workflow";
@@ -22,6 +23,7 @@ function App() {
       <Navbar />
       <main>
         <Hero />
+        <MotionReel />
         <About />
         <Services />
         <Workflow />
