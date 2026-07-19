@@ -59,7 +59,8 @@ export const projects = [
     rating: "Campaign",
     image: "/projects/06/thumb-sampleani1.webp",
     video: "/projects/06/sampleani1-optimized.mp4",
-    gallery: ["/projects/06/sampleani1-optimized.mp4", "/projects/06/Video-Ad-optimized.mp4"],
+    gallery: ["/projects/06/sampleani1-optimized.mp4", "/projects/06/Video-Ad-optimized.mp4", 
+      "/projects/06/ugc-sequence-01-optimized.mp4", "/projects/06/ugc-sequence-02-optimized.mp4"],
     description:
       "A launch-ready motion package with animated banners, social teasers, and conversion-focused landing visuals.",
     role: "After Effects animation, creative direction, video export pipeline",
