@@ -30,6 +30,13 @@ const skills = [
   "AI-Assisted Creative Workflows",
 ];
 
+const roleWords = [
+  "UI/UX Designer",
+  "Web Designer",
+  "Graphic Designer",
+  "Frontend Developer",
+];
+
 const heroDots = Array.from({ length: 30 }, (_, index) => ({
   id: `hero-dot-${index}`,
   left: `${(index * 29 + 11) % 100}%`,
@@ -93,15 +100,29 @@ export const Hero = () => {
             <div className="animate-fade-in">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
                 <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                Senior Graphic Designer
+                Available for Remote and Full-time Work Opportunities
               </span>
             </div>
 
             {/* Headline */}
             <div className="space-y-4">
+              <div className="hero-role-line animate-fade-in text-3xl font-bold leading-tight animation-delay-100 md:text-4xl lg:text-5xl">
+                <span className="text-white">I’m a</span>
+                <span
+                  aria-hidden="true"
+                  className="hero-role-loop text-[#57e7dc]"
+                >
+                  <span className="hero-role-track">
+                    {[...roleWords, roleWords[0]].map((role, index) => (
+                      <span className="hero-role-word" key={`${role}-${index}`}>
+                        {role}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+                <span className="sr-only">{`I'm a ${roleWords.join(", ")}`}</span>
+              </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in animation-delay-100">
-                <span className="text-primary glow-text">Senior graphic designer</span>
-                <br />
                 shaping brand visuals, campaign systems,
                 <br />
                 <span className="font-serif font-normal text-white">
@@ -190,7 +211,7 @@ export const Hero = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
                     <span className="text-sm font-medium">
-                      Open to senior roles
+                      Open to remote & full-time work opportunities
                     </span>
                   </div>
                 </div>

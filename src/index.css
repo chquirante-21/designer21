@@ -146,6 +146,74 @@
     animation: marquee 50s linear infinite;
   }
 
+  .hero-role-line {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35em;
+  }
+
+  .hero-role-loop {
+    display: inline-block;
+    height: 1.18em;
+    line-height: 1.18;
+    min-height: 1.2em;
+    min-width: min(100%, 12.5em);
+    overflow: hidden;
+    position: relative;
+    vertical-align: bottom;
+  }
+
+  .hero-role-track {
+    animation: hero-role-track 8.8s cubic-bezier(0.72, 0, 0.28, 1) infinite;
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+
+  .hero-role-word {
+    display: block;
+    flex: 0 0 1.18em;
+    line-height: 1.18;
+    white-space: nowrap;
+  }
+
+  @keyframes hero-role-track {
+    0%,
+    16% {
+      transform: translateY(0);
+    }
+    22%,
+    38% {
+      transform: translateY(-1.18em);
+    }
+    44%,
+    60% {
+      transform: translateY(-2.36em);
+    }
+    66%,
+    82% {
+      transform: translateY(-3.54em);
+    }
+    88%,
+    100% {
+      transform: translateY(-4.72em);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .hero-role-loop {
+      min-width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-role-track {
+      animation: none;
+      transform: none;
+    }
+  }
+
   .animation-delay-100 {
     animation-delay: 100ms;
   }
