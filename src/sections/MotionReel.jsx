@@ -5,7 +5,7 @@ import { trackEvent } from "@/lib/analytics";
 const reelSamples = [
   {
     title: "Short-form video ad",
-    src: "/projects/06/Video-Ad-optimized.mp4",
+    src: "/projects/06/CupiClubCebu-Tiktok.mp4",
     poster: "/projects/06/gallery-sampleani1.avif",
   },
   {

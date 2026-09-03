@@ -280,7 +280,7 @@ export const Projects = () => {
           <div className="text-center mt-12 animate-fade-in animation-delay-500">
             <AnimatedBorderButton
               as="a"
-              href="https://www.figma.com/design/xH2r0dsSEM0F8i10JQOa0R/Old-Files?node-id=0-1&t=LYoCjN5Dhoxo0MUv-1"
+              href="https://www.behance.net/chaqkoy"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent("view_more_samples_click")}

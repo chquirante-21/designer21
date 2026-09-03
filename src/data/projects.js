@@ -76,7 +76,7 @@ export const projects = [
     duration: "10 weeks",
     rating: "Case Study",
     image: "/projects/02/thumb-ecom1.webp",
-    gallery: ["/projects/02/gallery-ecom1.avif", "/projects/02/gallery-ecom2.avif", "/projects/02/gallery-ecom3.avif"],
+    gallery: ["/projects/02/gallery-ecom1.avif", "/projects/02/gallery-ecom2.avif", "/projects/02/gallery-ecom3.avif", "/projects/02/optimal-human.png",],
     description:
       "A responsive storefront concept with clear product hierarchy, promotional space, and a visual system that supports browsing, conversion, and brand trust.",
     role: "Product layout, visual system, responsive storefront UI",
